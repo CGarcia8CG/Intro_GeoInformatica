@@ -1,0 +1,53 @@
+<!--jquery-ajax.html-->
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+    <title>Tarea 2: Ajax using jquery</title>
+    <!-- Go to https://code.jquery.com/ for more details -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script>
+    $(document).ready(() => {
+        
+       
+       
+        
+        //console.log("query", );
+        $('#getData').click(()=>{
+       
+	   
+			//$.getJSON('http://www.unigeo.igg.unam.mx/geoserver/unigeo/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=unigeo:catalogue_fotografias_bbox&maxFeatures=10000&outputFormat=application%2Fjson',(jsonData)=>{//fuente original de los datos de la practica
+            $.getJSON('catalogo.json',(jsonData)=>{
+				//debugData=jsonData;//usamos esta linea para facilitar las labores de inpeccion de datos, pero no se recomienda dejarlo para produccion
+                if(jsonData){
+				
+				
+                    $.each(jsonData.features, (key, value)=>{
+                        $('#lista_de_elementos')
+                        .append(`<li>Id: Id: ${value.properties.id}
+                        	Nombre: ${value.properties.name}<br></br>
+                            Latitud: ${value.properties.lat}<br></br>
+                            Longitud: ${value.properties.lon}<br></br>
+                            Thumbnail: <img src=${value.properties.thumbnail}><br></br>
+                            </li>`);
+                    })
+                }
+                console.log("jsonData", jsonData);
+            })
+            
+          
+
+        }) 
+    })
+    </script>
+</head>
+<body>
+    <h2>Tarea 2: Recolección de valores del archivo Repository</h2>
+    <input type="button" id="getData" value="(∩ ͡° ͜ʖ ͡°)⊃━☆ﾟ. * ･ ｡ﾟ, Obtener Datos de Repository" />
+    <div id="resultados">
+        <div id="lista_de_elementos">
+
+        </div>
+    </div>
+</body>
+</html>
